@@ -1,9 +1,8 @@
-## plot3.R ----
+## plot2.R ----
 # Adam Lindstrom
 # Project: Coursera\Exploratory Data Analysis\Course Project 1
 # 08/09/2014
-# This code reads the "household_power_consumption" data set and makes 3 variable time series plot
-# Note that lack of titles and inconsistent axis labeling are stipulated by the assignment
+# This code reads the "household_power_consumption" data set and makes a time series plot of Global Active Power
 
 ## Read the data ----
 #requires raw data file in working directory
@@ -26,23 +25,16 @@ d$DateTime<-strptime(d$DateTime, "%d/%m/%Y %H:%M:%S")
 
 ## Initialize plot ---- 
 # turn on png recorder
-png(filename = 'plot3.png', width = 480, height = 480, units = 'px')
+png(filename = 'plot2.png', width = 480, height = 480, units = 'px')
 
-## Plot 3 ----
-# store the range of y in a 2-vector
-yrange<-range(c(d$Sub_metering_1,d$Sub_metering_2,d$Sub_metering_3))
-# overlay of three line charts, each sub-metering vs. time
-plot(x=d$DateTime, y=d$Sub_metering_1, type="l", ylim=yrange, col="black",
-     ylab = "Energy sub metering",
+## Plot 2 ----
+# line chart of global active power vs. time
+par(col="black")
+plot(x = d$DateTime, y = d$Global_active_power,
+     # draw lines instead of points
+     type = "l", 
+     ylab = "Global Active Power (kilowatts)",
      xlab = "")
-lines(x=d$DateTime, y=d$Sub_metering_2, type="l", ylim=yrange, col="red")
-lines(x=d$DateTime, y=d$Sub_metering_3, type="l", ylim=yrange, col="blue")
-# making legends is annoying, surely there is a better way
-legend(x = "topright", 
-       legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       lty=c(1,1,1), # codes for line type
-       lwd=c(1,1,1), # codes for line width
-       col=c("black", "red", "blue")) # line color
 
 ## Cleanup ----
 # close the png recorder
